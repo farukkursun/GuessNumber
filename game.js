@@ -1,42 +1,55 @@
-const PC = Math.floor(Math.random() * 20);
+let PC = Math.ceil(Math.random() * 20);
 console.log(PC);
 let SkorPc = 10;
+let enYuksekSkor=0;
+let mesaj = document.querySelector(".msg");
 
-const tahmin = document.querySelector(".guess");
 
 document.querySelector(".check").onclick = () => {
-  const mesaj = document.querySelector(".msg");
+  const tahmin = document.querySelector(".guess").value;
   const score = document.querySelector(".score");
   const number = document.querySelector(".number");
   const topscores = document.querySelector(".top-score");
-  if (tahmin.value != PC) {
-    SkorPc--;
-    score.innerHTML = SkorPc;
+
+
+  if(!tahmin){
+    mesaj.textContent='Lütfen bir tahmin girirniz'
   }
-  if (SkorPc == 0) {
-    mesaj.innerHTML = "Game over!";
-  }
-  if (tahmin.value < PC) {
-    mesaj.innerHTML = "arttir...";
-  } else if (tahmin.value > PC) {
-    mesaj.innerHTML = "azalt...";
-  } else {
-    mesaj.innerHTML = "kazandiniz...";
+
+  else if (tahmin == PC) {
+    mesaj.textContent = "tebrikler bildiniz..💕";
     document.querySelector("body").style.backgroundColor = "green";
-    number.innerHTML = tahmin.value;
-    topscores.innerHTML = SkorPc;
+    number.textContent=PC;
+    if(SkorPc>enYuksekSkor){
+      enYuksekSkor=SkorPc;
+      topscores.textContent=enYuksekSkor
+    }
+
+  } 
+  
+  else {
+    if (SkorPc > 1) {
+      SkorPc--;
+      score.textContent = SkorPc;
+      tahmin < PC
+        ? (mesaj.textContent = "Arttir...📈")
+        : (mesaj.textContent = "Azalt...📉");
+    } else {
+      mesaj.textContent = "Oyunu Kaybettiniz";
+      score.textContent = 0;
+      document.querySelector("body").style.backgroundColor = "red";
+    }
+
   }
 };
 
 document.querySelector(".again").onclick = () => {
-  const mesaj = document.querySelector(".msg");
-  const number = document.querySelector(".number");
-  const score = document.querySelector(".score");
-  const PC = Math.floor(Math.random() * 20);
-  document.querySelector("body").style.backgroundColor = "black";
-  number.innerHTML = "?";
-  score.innerHTML = "10";
-  mesaj.innerHTML = "satarting...";
+  SkorPc = 10;
+  document.querySelector(".score").textContent = 10;
+  PC = Math.ceil(Math.random() * 20);
   console.log(PC);
-  tahmin.value=''
+  mesaj.textContent = "Oyun Yeni Oyuncu icin basliyor";
+  document.querySelector("body").style.backgroundColor = "#2d3436";
+  document.querySelector(".guess").value = "";
+  document.querySelector(".number").textContent = "?";
 };
